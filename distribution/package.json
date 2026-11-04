@@ -18,6 +18,7 @@
     "@gestalts-plugin/sources": "link:../../gestalts/plugins/sources",
     "@gestalts-plugin/typst": "link:../../gestalts/plugins/typst",
     "@gestalts/client": "link:../../gestalts/packages/client",
+    "@gestalts/kit": "link:../../gestalts/packages/kit",
     "@gestalts/sdk": "link:../../gestalts/packages/sdk",
     "@gestalts/ui": "link:../../gestalts/packages/ui",
     "@gestalts/vite": "link:../../gestalts/packages/vite",

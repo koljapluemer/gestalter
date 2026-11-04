@@ -1,8 +1,11 @@
 //! Copies what the node needs of the Gestalter's plugins (the `@gestalts-plugin/*` dependencies of its web app:
 //! manifests, gestalts, workers; not their UI or decks, and never `node_modules`) to `$OUT_DIR/plugins`, and the
-//! Python SDK their workers use to `$OUT_DIR/sdk`, which `include_dir!` embeds.
+//! Python SDK their workers use to `$OUT_DIR/sdk`, and the web app's build (`distribution/dist`) to `$OUT_DIR/app`,
+//! which `include_dir!` embeds.
 //!
-//! Plugins are found where pnpm installed them for the web app, so run `mise run setup` first.
+//! Plugins are found where pnpm installed them for the web app, so run `mise run setup` first. A release build needs
+//! the web app built (`mise run build`); a debug build without it serves a page saying so (in development the
+//! Gestalter comes from Vite anyway).
 
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -19,8 +22,8 @@ fn main() {
         .filter_map(|(name, _)| name.strip_prefix("@gestalts-plugin/")).collect();
 
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
-    let (plugins_out, sdk_out) = (out.join("plugins"), out.join("sdk"));
-    for dir in [&plugins_out, &sdk_out] {
+    let (plugins_out, sdk_out, app_out) = (out.join("plugins"), out.join("sdk"), out.join("app"));
+    for dir in [&plugins_out, &sdk_out, &app_out] {
         let _ = fs::remove_dir_all(dir);
         fs::create_dir_all(dir).unwrap();
     }
@@ -47,6 +50,18 @@ fn main() {
     if let Some(sdk) = sdk {
         println!("cargo:rerun-if-changed={}", sdk.display());
         copy_tree(&sdk, &sdk_out);
+    }
+
+    let dist = app.join("dist");
+    println!("cargo:rerun-if-changed={}", dist.display());
+    if dist.join("index.html").is_file() {
+        copy_tree(&dist, &app_out);
+    } else if std::env::var("PROFILE").as_deref() == Ok("release") {
+        panic!("{} is missing; run `mise run build` first", dist.join("index.html").display());
+    } else {
+        fs::write(app_out.join("index.html"), "<!doctype html><meta charset=utf-8><title>Gestalter</title>\
+            <p>This debug build has no Gestalter built in. Run <code>mise run build</code>, or use the dev server \
+            (<code>mise run dev</code>).</p>\n").unwrap();
     }
 }
 

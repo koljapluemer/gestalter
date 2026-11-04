@@ -32,6 +32,9 @@ importers:
       '@gestalts/client':
         specifier: link:../../gestalts/packages/client
         version: link:../../gestalts/packages/client
+      '@gestalts/kit':
+        specifier: link:../../gestalts/packages/kit
+        version: link:../../gestalts/packages/kit
       '@gestalts/sdk':
         specifier: link:../../gestalts/packages/sdk
         version: link:../../gestalts/packages/sdk

@@ -16,12 +16,12 @@ run = [
 ]
 
 [tasks.dev]
-description = "The desktop app (tray, gestalts' plugins, dev profile) and the Gestalter :5173, with hot reload"
+description = "The desktop app (tray, gestalts' plugins, dev profile) and the Gestalter :5173 on it, with hot reload"
 depends = ["setup"]
 shell = "bash -c"
 run = """
 trap 'kill 0' EXIT
-cargo run -q -p gestalts-connector -- --profile dev --plugins-dir ../gestalts/plugins &
+cargo run -q -p gestalter -- --profile dev --plugins-dir ../gestalts/plugins --open-url http://localhost:5173/ &
 pnpm --dir distribution dev &
 wait
 """
@@ -37,21 +37,21 @@ run = [
 ]
 
 [tasks.build]
-description = "Production build of the Gestalter into distribution/dist, for deploying"
+description = "Production build of the Gestalter into distribution/dist, which the desktop app embeds"
 depends = ["setup"]
 run = "pnpm --dir distribution build"
 
 [tasks.package]
 description = "Desktop app installers for this OS into target/packages"
-depends = ["setup"]
+depends = ["build"]
 shell = "bash -c"
 run = """
 set -euo pipefail
 case "$(uname -s)" in
-  Linux)  cargo packager -p gestalts-connector --release --formats deb,appimage
+  Linux)  cargo packager -p gestalter --release --formats deb,appimage
           cargo generate-rpm -p desktop -o target/packages ;;
-  Darwin) cargo packager -p gestalts-connector --release --formats dmg ;;
-  *)      cargo packager -p gestalts-connector --release --formats nsis ;;
+  Darwin) cargo packager -p gestalter --release --formats dmg ;;
+  *)      cargo packager -p gestalter --release --formats nsis ;;
 esac
 """
 

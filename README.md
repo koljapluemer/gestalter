@@ -1,9 +1,9 @@
 # Gestalter
 
 A personal learning and note-taking app on [gestalts](../gestalts): the host with every plugin, panes as tabs
-(`distribution/`), and its desktop app (`desktop/`, `gestalts-connector`), which keeps your notes in a folder on this
-computer and runs the plugins' workers. `android/` and `ios/` come later. See [`doc/desktop.md`](doc/desktop.md) and
-[`doc/next-steps.md`](doc/next-steps.md).
+(`distribution/`), and its desktop app (`desktop/`, `gestalter`), which keeps your notes in a folder on this computer,
+serves the Gestalter on `127.0.0.1:7717` and runs the plugins' workers. `android/` and `ios/` come later. See
+[`doc/desktop.md`](doc/desktop.md) and [`doc/next-steps.md`](doc/next-steps.md).
 
 ## Developing
 
@@ -18,7 +18,7 @@ parent/
 
 ```sh
 mise install          # once after cloning, and when mise.toml changes
-mise run dev          # desktop app (dev profile, gestalts' plugins) + Gestalter :5173, hot reload, gestalts included
+mise run dev          # desktop app (dev profile, gestalts' plugins) + Gestalter :5173 on it, hot reload
 mise run check        # tests, lints, typechecks
 mise tasks            # everything else
 ```
@@ -27,8 +27,7 @@ On Linux, building the desktop app needs no GTK; its tray talks D-Bus directly.
 
 ## Shipping
 
-- **Web frontend:** `mise run build` writes `distribution/dist`, static files to host anywhere. It is meant for
-  `https://gestalter.koljasam.com`, which the desktop app allows out of the box.
-- **Desktop app:** `mise run package` builds this OS's installers into `target/packages` (Linux: `.deb`, `.rpm`,
-  AppImage; macOS: `.dmg`; Windows: setup `.exe`). `mise run install` builds them and installs one here like a user
-  would. See [`doc/desktop.md`](doc/desktop.md).
+`mise run package` builds the Gestalter (`mise run build`, into `distribution/dist`), embeds it in the desktop app
+and builds this OS's installers into `target/packages` (Linux: `.deb`, `.rpm`, AppImage; macOS: `.dmg`; Windows:
+setup `.exe`). `mise run install` builds them and installs one here like a user would. See
+[`doc/desktop.md`](doc/desktop.md).

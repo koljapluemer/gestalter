@@ -1,6 +1,6 @@
-//! gestalts-connector, the Gestalter's desktop app: the node (a folder on this computer as the source of truth for
-//! the Gestalts web apps, and the host of their plugins' workers) with a tray icon, a status window where you
-//! choose the folder, and the Gestalter's plugins built in.
+//! gestalter, the Gestalter's desktop app: the node (a folder on this computer as the source of truth, and the host of
+//! the plugins' workers), which serves the Gestalter itself on 127.0.0.1, with a tray icon, the Gestalter's plugins
+//! and its web build built in.
 //!
 //! Started without a subcommand it is the desktop app; `serve`, `lint` and `publish` are the node's own.
 
@@ -8,22 +8,30 @@ use clap::{Parser, Subcommand};
 use gestalts_node::{Embedded, NodeCommand, Opts};
 use include_dir::{Dir, include_dir};
 
-mod status;
 mod tray;
 
 pub const ICON: &[u8] = include_bytes!("../assets/icon.png");
-pub const TITLE: &str = "Gestalts Connector";
-/// Passed to the status window so it can use `/control/*`.
-pub const TOKEN_ENV: &str = "GESTALTS_CONTROL_TOKEN";
-/// The Gestalter's hosted frontends, allowed to connect out of the box.
-pub const ORIGINS: &[&str] = &["https://gestalter.koljasam.com"];
+pub const TITLE: &str = "Gestalter";
+/// `app` in the node's `/health`, so a second launch knows it found itself.
+pub const NAME: &str = "gestalter";
+/// The desktop app's earlier name: what an old install still answers `/health` with, and its autostart entry.
+pub const OLD_NAME: &str = "gestalts-connector";
+/// Other web frontends allowed to use the node, besides localhost.
+pub const ORIGINS: &[&str] = &[
+    // TODO: remove once the hosted Gestalter is taken down; until then its users can sync their browser's notes into
+    // the folder one last time
+    "https://gestalter.koljasam.com",
+    // TODO: loops-for-learning's origin, once it is deployed
+];
 
 /// The plugins the Gestalter ships (its `@gestalts-plugin/*` dependencies), copied by `build.rs`.
 static BUILTIN: Dir<'static> = include_dir!("$OUT_DIR/plugins");
 // TODO: publish the SDK to PyPI and depend on a version instead, which third-party plugins need anyway
 static SDK: Dir<'static> = include_dir!("$OUT_DIR/sdk");
+/// The Gestalter's web build, served at `/`.
+static APP: Dir<'static> = include_dir!("$OUT_DIR/app");
 
-pub const EMBEDDED: Embedded = Embedded { builtin: Some((&BUILTIN, &SDK)), origins: ORIGINS };
+pub const EMBEDDED: Embedded = Embedded { name: NAME, app: Some(&APP), builtin: Some((&BUILTIN, &SDK)), origins: ORIGINS };
 
 #[derive(Parser)]
 #[command(version, about)]
@@ -32,30 +40,25 @@ struct Cli {
     command: Option<Command>,
     #[command(flatten)]
     opts: Opts,
+    /// where "Open Gestalter" goes instead of the node's own address (the Vite dev server, in development)
+    #[arg(long, hide = true)]
+    open_url: Option<String>,
 }
 
 #[derive(Subcommand)]
 enum Command {
     #[command(flatten)]
     Node(NodeCommand),
-    /// the status window (opened from the tray)
-    #[command(hide = true)]
-    Status {
-        /// open the folder picker right away
-        #[arg(long)]
-        choose: bool,
-    },
 }
 
 fn main() {
     let cli = Cli::parse();
     let result = match cli.command {
-        None => tray::run(&cli.opts),
-        Some(Command::Status { choose }) => status::run(&cli.opts, choose),
+        None => tray::run(&cli.opts, cli.open_url),
         Some(Command::Node(command)) => gestalts_node::run_command(command, &cli.opts, EMBEDDED),
     };
     if let Err(e) = result {
-        eprintln!("gestalts-connector: {e}");
+        eprintln!("gestalter: {e}");
         std::process::exit(1);
     }
 }

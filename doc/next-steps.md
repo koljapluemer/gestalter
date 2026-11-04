@@ -3,12 +3,12 @@
 The project's roadmap, and what the foundation still needs, is in the gestalts repo's `doc/next-steps.md`. These are
 the Gestalter's own steps.
 
-- [ ] **The desktop app serves the Gestalter.** The node serves the Gestalter's build on `127.0.0.1:7717` and the
-  tray opens it in the default browser. The UI uses the folder through the node directly, with no OPFS layer to sync.
-  The status window becomes a settings pane. Same origin removes CORS and Private Network Access for this app. A
-  webview can come later: on Linux it would bring back GTK (webkit2gtk), which the tray avoids. This is also when the
-  binary and package stop being called `gestalts-connector` (mind installed users' config, autostart and package
-  identity).
+- [x] **The desktop app serves the Gestalter**, as `gestalter` (formerly `gestalts-connector`): see
+  [desktop.md](desktop.md).
+- [ ] Take down the hosted `gestalter.koljasam.com` once its users had a release to sync into their folder, then drop
+  it from `ORIGINS` (`desktop/src/main.rs`).
+- [ ] A webview instead of the default browser, maybe: on Linux it would bring back GTK (webkit2gtk), which the tray
+  avoids.
 - [ ] **Pairing**: the desktop shows a QR code with its address and key (the node does the rest).
 - [ ] **Android.** First a spike: the core and one pane on a real phone, to see whether Tauri 2's Android support
   holds up. Then:
