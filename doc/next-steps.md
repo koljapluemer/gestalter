@@ -16,8 +16,8 @@ the Gestalter's own steps.
   - the core native, with `FsStorage` in app-private storage; `@gestalts/client`'s Tauri IPC backend
   - Kotlin for background sync (WorkManager, every 15 minutes at best; at once while the app is open), QR scanning,
     the camera, sign-in tabs and mDNS
-  - an Android distribution (learn, quotes, explorer, greek-alphabet; no canvas or Canvas2Typ), and "last synced"
-    shown
+  - an Android distribution, `id: gestalter-android` (learn, quotes, explorer, greek-alphabet; no canvas or
+    Canvas2Typ), with tabs of its own, and "last synced" shown
 - [ ] Release builds of the desktop app on macOS and Windows runners (their tray and event-loop code is untested),
   and code signing.
 - [ ] CI that checks out gestalts next to this repo, until the foundation is published.
