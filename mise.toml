@@ -1,0 +1,61 @@
+# Developer tools and tasks. After cloning (next to a checkout of gestalts, see README): `mise install`, then
+# `mise run dev`. Rust itself is pinned in rust-toolchain.toml (rustup reads it).
+
+[tools]
+node = "26.12.0"
+pnpm = "10.32.1"
+uv = "0.13.6"
+"cargo:cargo-packager" = "0.11.8"
+"cargo:cargo-generate-rpm" = "0.21.1"
+
+[tasks.setup]
+description = "The gestalts checkout next to this one (its packages and the core in wasm), then this app's JS dependencies"
+run = [
+  "mise -C ../gestalts run setup",
+  "pnpm --dir distribution install",
+]
+
+[tasks.dev]
+description = "The desktop app (tray, gestalts' plugins, dev profile) and the Gestalter :5173, with hot reload"
+depends = ["setup"]
+shell = "bash -c"
+run = """
+trap 'kill 0' EXIT
+cargo run -q -p gestalts-connector -- --profile dev --plugins-dir ../gestalts/plugins &
+pnpm --dir distribution dev &
+wait
+"""
+
+[tasks.check]
+description = "Tests, lints and typechecks"
+depends = ["setup"]
+run = [
+  "cargo test --workspace -q",
+  "cargo clippy --workspace -q -- -D warnings",
+  "pnpm --dir distribution lint",
+  "pnpm --dir distribution typecheck",
+]
+
+[tasks.build]
+description = "Production build of the Gestalter into distribution/dist, for deploying"
+depends = ["setup"]
+run = "pnpm --dir distribution build"
+
+[tasks.package]
+description = "Desktop app installers for this OS into target/packages"
+depends = ["setup"]
+shell = "bash -c"
+run = """
+set -euo pipefail
+case "$(uname -s)" in
+  Linux)  cargo packager -p gestalts-connector --release --formats deb,appimage
+          cargo generate-rpm -p desktop -o target/packages ;;
+  Darwin) cargo packager -p gestalts-connector --release --formats dmg ;;
+  *)      cargo packager -p gestalts-connector --release --formats nsis ;;
+esac
+"""
+
+[tasks.install]
+description = "Build and install the desktop app on this machine, the way a user gets it"
+depends = ["package"]
+run = "bash scripts/install-package.sh target/packages"
