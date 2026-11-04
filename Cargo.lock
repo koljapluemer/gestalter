@@ -1772,29 +1772,20 @@ dependencies = [
  "flate2",
  "gestalts-core",
  "gestalts-fs",
- "gestalts-plugin-host",
  "include_dir",
  "mime_guess",
  "pollster",
  "reqwest",
  "serde",
  "serde_json",
+ "serde_yaml_ng",
  "sha2",
  "tar",
+ "thiserror 2.0.21",
  "tokio",
  "tower-http",
  "uuid",
  "zip",
-]
-
-[[package]]
-name = "gestalts-plugin-host"
-version = "0.1.0"
-dependencies = [
- "gestalts-core",
- "serde",
- "serde_yaml_ng",
- "thiserror 2.0.21",
 ]
 
 [[package]]
