@@ -36,8 +36,8 @@ reconnects when it's back. Being same-origin with the node, it needs no CORS or 
   tray is a StatusNotifierItem over D-Bus, so there's no GTK dependency. Desktops without a tray (e.g. GNOME without
   an extension) still get the Gestalter: launching the app again opens it.
 - **Desktop settings** (the drive icon in the Gestalter's tab bar, `distribution/src/DesktopSettings.tsx`): the folder
-  (choose another, show it in the file manager), uv and each plugin's state, other web apps connected in the last
-  minute, conflicts, "Start on login" and "Quit desktop app". They use the node's `/control/*`, which the page may use
+  (choose another, show it in the file manager), uv and each plugin's state, devices (pair one by QR code, the paired
+  ones with when they were last seen, forget one), other web apps connected in the last minute, conflicts, "Start on login" and "Quit desktop app". They use the node's `/control/*`, which the page may use
   because the node served it; the native parts (picker, file manager, autostart) are the tray process's `Shell`
   (`desktop/src/tray.rs`). Choosing another folder reloads the Gestalter.
 - **One instance:** launching it again while it runs opens the Gestalter in the running one, then exits.

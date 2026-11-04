@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useConnector } from '@gestalts/client';
 import { Conflicts } from '@gestalts/kit';
-import { desktop, type DesktopStatus } from './desktop';
+import { desktop, type DesktopStatus, type PairingOffer } from './desktop';
 
 const STATE: Record<string, string> = { stopped: 'stopped', starting: 'starting…', ready: 'ready', running: 'running', error: 'error' };
 
@@ -55,6 +55,8 @@ export function DesktopSettings() {
         ))}
       </section>
 
+      {status.lan && <Devices status={status} onError={setError} />}
+
       {status.clients.length > 0 && (
         <section className="flex flex-col gap-1">
           <h3 className="font-semibold">Other web apps</h3>
@@ -78,4 +80,66 @@ export function DesktopSettings() {
       <p className="text-xs text-base-content/50">v{status.version} · {status.address}</p>
     </div>
   );
+}
+
+/** Devices on the home network: pairing one by its QR code, and the ones paired. */
+function Devices({ status, onError }: { status: DesktopStatus; onError: (e: string) => void }) {
+  const lan = status.lan!;
+  const [offer, setOffer] = useState<PairingOffer & { until: number }>();
+  const [now, setNow] = useState(() => Date.now());
+  const paired = status.devices.length;
+  const [pairedBefore, setPairedBefore] = useState(paired);
+  const fail = (e: unknown) => onError(e instanceof Error ? e.message : String(e));
+
+  useEffect(() => {
+    if (!offer) return;
+    const timer = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(timer);
+  }, [offer]);
+  // used (a device more), cancelled or expired: the code is gone
+  const shown = offer && paired <= pairedBefore && now < offer.until && lan.pairing_open ? offer : undefined;
+
+  const start = () => {
+    setPairedBefore(paired);
+    desktop.startPairing().then((o) => { setNow(Date.now()); setOffer({ ...o, until: Date.now() + o.expires_in * 1000 }); }, fail);
+  };
+  const cancel = () => { setOffer(undefined); desktop.cancelPairing().catch(fail); };
+  const left = shown ? Math.max(0, Math.round((shown.until - now) / 1000)) : 0;
+
+  return (
+    <section className="flex flex-col gap-1">
+      <h3 className="font-semibold">Devices</h3>
+      {status.devices.map((d) => (
+        <div key={d.id} className="flex items-center gap-2">
+          <span className="flex-1 truncate">{d.name}</span>
+          <span className="text-xs text-base-content/60">{d.last_seen ? `seen ${ago(d.last_seen)}` : 'never seen'}</span>
+          <button type="button" className="btn btn-xs btn-ghost" onClick={() => desktop.forgetDevice(d.id).catch(fail)}>Forget</button>
+        </div>
+      ))}
+      {shown ? (
+        <div className="flex flex-col items-center gap-1">
+          <img className="h-48 w-48 bg-white" alt="Pairing code" src={`data:image/svg+xml;charset=utf-8,${encodeURIComponent(shown.svg)}`} />
+          <p className="text-xs text-base-content/60">
+            Scan this with the Gestalter on your phone, on the same network. Valid for {Math.floor(left / 60)}:{String(left % 60).padStart(2, '0')}.
+          </p>
+          <button type="button" className="btn btn-sm btn-ghost" onClick={cancel}>Cancel</button>
+        </div>
+      ) : (
+        <button type="button" className="btn btn-sm self-start" onClick={start}>Pair a device…</button>
+      )}
+      <p className="text-xs text-base-content/60">
+        {lan.listening
+          ? `Paired devices reach this computer at ${lan.addresses.join(', ') || `port ${lan.port}`}, encrypted.`
+          : 'Not on the network: nothing is paired.'}
+      </p>
+    </section>
+  );
+}
+
+function ago(iso: string): string {
+  const s = Math.max(0, Math.round((Date.now() - Date.parse(iso)) / 1000));
+  if (s < 90) return 'just now';
+  if (s < 90 * 60) return `${Math.round(s / 60)} min ago`;
+  if (s < 36 * 3600) return `${Math.round(s / 3600)} h ago`;
+  return new Date(iso).toLocaleDateString();
 }

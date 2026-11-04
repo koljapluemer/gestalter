@@ -9,11 +9,14 @@ the Gestalter's own steps.
   it from `ORIGINS` (`desktop/src/main.rs`).
 - [ ] A webview instead of the default browser, maybe: on Linux it would bring back GTK (webkit2gtk), which the tray
   avoids.
-- [ ] **Pairing**: the desktop shows a QR code with its address and key (the node does the rest).
+- [x] **Pairing**: the desktop's settings show a QR code ("Devices"), list the paired devices and forget them; the
+  node does the rest (gestalts' `doc/node.md#pairing-and-the-home-network`).
 - [ ] **Android.** First a spike: the core and one pane on a real phone, to see whether Tauri 2's Android support
   holds up. Then:
   - the UI: `@gestalts/ui` and the plugins in Android's WebView (Chrome)
   - the core native, with `FsStorage` in app-private storage; `@gestalts/client`'s Tauri IPC backend
+  - pairing with `gestalts_peer::paired`: scan the code, `pair`, keep the `PairedNode` (its token privately), then
+    `connect` and sync with a base per `base_name(node_id, folder_id)`; mDNS needs a `MulticastLock` meanwhile
   - Kotlin for background sync (WorkManager, every 15 minutes at best; at once while the app is open), QR scanning,
     the camera, sign-in tabs and mDNS
   - an Android distribution, `id: gestalter-android` (learn, quotes, explorer, greek-alphabet; no canvas or
