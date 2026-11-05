@@ -11,6 +11,9 @@ importers:
       '@gestalts-plugin/alphabet-pronunciation-via-visual-cognates':
         specifier: link:../../gestalt-plugins/sam-learns/alphabet-pronunciation-via-visual-cognates
         version: link:../../gestalt-plugins/sam-learns/alphabet-pronunciation-via-visual-cognates
+      '@gestalts-plugin/calendar':
+        specifier: link:../../gestalts/plugins/calendar
+        version: link:../../gestalts/plugins/calendar
       '@gestalts-plugin/canvas':
         specifier: link:../../gestalts/plugins/canvas
         version: link:../../gestalts/plugins/canvas

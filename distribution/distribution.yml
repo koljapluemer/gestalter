@@ -1,4 +1,4 @@
 # The Gestalter on the desktop (`id`, kept for good: pane notes record it): the host with every plugin (its @gestalts-plugin/* dependencies); tabs are pane notes, seeded with these
 id: gestalter-desktop
-default_panes: [explorer/explorer, explorer/new, canvas/canvas, typst/canvas2typ, sources/sources, learn/learn, quotes/quotes, alphabet-pronunciation-via-visual-cognates/practice, learn-world-map/practice]
+default_panes: [explorer/explorer, explorer/new, calendar/daily, calendar/calendar, canvas/canvas, typst/canvas2typ, sources/sources, learn/learn, quotes/quotes, alphabet-pronunciation-via-visual-cognates/practice, learn-world-map/practice]
 install_ui: true

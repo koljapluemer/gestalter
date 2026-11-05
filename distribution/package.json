@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@gestalts-plugin/alphabet-pronunciation-via-visual-cognates": "link:../../gestalt-plugins/sam-learns/alphabet-pronunciation-via-visual-cognates",
+    "@gestalts-plugin/calendar": "link:../../gestalts/plugins/calendar",
     "@gestalts-plugin/canvas": "link:../../gestalts/plugins/canvas",
     "@gestalts-plugin/explorer": "link:../../gestalts/plugins/explorer",
     "@gestalts-plugin/learn": "link:../../gestalts/plugins/learn",
