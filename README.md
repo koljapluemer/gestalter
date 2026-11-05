@@ -7,18 +7,19 @@ serves the Gestalter on `127.0.0.1:7717` and runs the plugins' workers. `android
 
 ## Developing
 
-Needs [mise](https://mise.jdx.dev), [rustup](https://rustup.rs), and a checkout of gestalts next to this one: until
-it is published, this repo links its packages, plugins and node by path.
+Needs [mise](https://mise.jdx.dev), [rustup](https://rustup.rs), and checkouts of gestalts and gestalt-plugins next
+to this one: until they are published, this repo links their packages, plugins and node by path.
 
 ```
 parent/
   gestalts/
+  gestalt-plugins/
   gestalter/
 ```
 
 ```sh
 mise install          # once after cloning, and when mise.toml changes
-mise run dev          # desktop app (dev profile, gestalts' plugins) + Gestalter :5173 on it, hot reload
+mise run dev          # desktop app (dev profile, both repos' plugins) + Gestalter :5173 on it, hot reload
 mise run check        # tests, lints, typechecks
 mise tasks            # everything else
 ```

@@ -10,10 +10,11 @@
     "lint": "oxlint src"
   },
   "dependencies": {
+    "@gestalts-plugin/alphabet-pronunciation-via-visual-cognates": "link:../../gestalt-plugins/sam-learns/alphabet-pronunciation-via-visual-cognates",
     "@gestalts-plugin/canvas": "link:../../gestalts/plugins/canvas",
     "@gestalts-plugin/explorer": "link:../../gestalts/plugins/explorer",
-    "@gestalts-plugin/greek-alphabet": "link:../../gestalts/plugins/greek-alphabet",
     "@gestalts-plugin/learn": "link:../../gestalts/plugins/learn",
+    "@gestalts-plugin/learn-world-map": "link:../../gestalt-plugins/sam-learns/learn-world-map",
     "@gestalts-plugin/quotes": "link:../../gestalts/plugins/quotes",
     "@gestalts-plugin/sources": "link:../../gestalts/plugins/sources",
     "@gestalts-plugin/typst": "link:../../gestalts/plugins/typst",

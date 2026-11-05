@@ -8,18 +8,21 @@ importers:
 
   .:
     dependencies:
+      '@gestalts-plugin/alphabet-pronunciation-via-visual-cognates':
+        specifier: link:../../gestalt-plugins/sam-learns/alphabet-pronunciation-via-visual-cognates
+        version: link:../../gestalt-plugins/sam-learns/alphabet-pronunciation-via-visual-cognates
       '@gestalts-plugin/canvas':
         specifier: link:../../gestalts/plugins/canvas
         version: link:../../gestalts/plugins/canvas
       '@gestalts-plugin/explorer':
         specifier: link:../../gestalts/plugins/explorer
         version: link:../../gestalts/plugins/explorer
-      '@gestalts-plugin/greek-alphabet':
-        specifier: link:../../gestalts/plugins/greek-alphabet
-        version: link:../../gestalts/plugins/greek-alphabet
       '@gestalts-plugin/learn':
         specifier: link:../../gestalts/plugins/learn
         version: link:../../gestalts/plugins/learn
+      '@gestalts-plugin/learn-world-map':
+        specifier: link:../../gestalt-plugins/sam-learns/learn-world-map
+        version: link:../../gestalt-plugins/sam-learns/learn-world-map
       '@gestalts-plugin/quotes':
         specifier: link:../../gestalts/plugins/quotes
         version: link:../../gestalts/plugins/quotes

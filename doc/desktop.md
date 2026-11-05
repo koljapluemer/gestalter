@@ -18,8 +18,8 @@ gestalter publish DIR        # prepare a folder as a read-only deck
 # all of them: [--port 7717] [--profile NAME] [--plugins-dir DIR]... [--allow-origin URL]... [--app-dir DIR]
 ```
 
-In development, `mise run dev` starts it with `--profile dev --plugins-dir ../gestalts/plugins --open-url
-http://localhost:5173/`, next to Vite on :5173, which proxies the node's API (`distribution/vite.config.ts`). So the
+In development, `mise run dev` starts it with `--profile dev --plugins-dir ../gestalts/plugins --plugins-dir
+../gestalt-plugins/sam-learns --open-url http://localhost:5173/`, next to Vite on :5173, which proxies the node's API (`distribution/vite.config.ts`). So the
 dev page uses the folder directly as the served one does. The dev profile keeps its settings apart from an installed
 app. Both use port 7717, so quit one before starting the other.
 

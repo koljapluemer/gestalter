@@ -22,14 +22,14 @@ export function App() {
 }
 
 function Gestalter() {
-  const { repo, installed, error } = usePluginRepo({ node: NODE }, REGISTRY);
+  const { repo, installed, decks, error } = usePluginRepo({ node: NODE }, REGISTRY);
   if (error) return <Failure message={`Could not open your notes: ${error}`} />;
   if (!repo) return <Spinner />;
   return (
     <RepoProvider repo={repo}>
       <PaneTabs registry={REGISTRY} title="Gestalter" end={<>
         <DebugLogButton />
-        {distribution.install_ui && <PluginsMenu mounted={installed} />}
+        {distribution.install_ui && <PluginsMenu mounted={installed} decks={decks} />}
         <DesktopMenu />
       </>} />
     </RepoProvider>
@@ -56,12 +56,12 @@ function ChooseFolder({ onChosen }: { onChosen: (folder: NonNullable<NodeHealth[
   );
 }
 
-function PluginsMenu({ mounted }: { mounted: PluginEntry[] }) {
+function PluginsMenu({ mounted, decks }: { mounted: PluginEntry[]; decks: string[] }) {
   return (
     <details className="dropdown dropdown-end">
       <summary className="btn btn-sm btn-ghost btn-square" title="Plugins"><Blocks className="size-4" /></summary>
       <div className="dropdown-content z-50 mt-2 rounded-box border border-base-300 bg-base-100 p-3 shadow">
-        <PluginSettings registry={REGISTRY} mounted={mounted} />
+        <PluginSettings registry={REGISTRY} mounted={mounted} decks={decks} />
       </div>
     </details>
   );

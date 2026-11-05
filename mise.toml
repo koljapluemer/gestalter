@@ -9,19 +9,19 @@ uv = "0.13.6"
 "cargo:cargo-generate-rpm" = "0.21.1"
 
 [tasks.setup]
-description = "The gestalts checkout next to this one (its packages and the core in wasm), then this app's JS dependencies"
+description = "The gestalts and gestalt-plugins checkouts next to this one (packages, the core in wasm, plugins), then this app's JS dependencies"
 run = [
-  "mise -C ../gestalts run setup",
+  "mise -C ../gestalt-plugins run setup",
   "pnpm --dir distribution install",
 ]
 
 [tasks.dev]
-description = "The desktop app (tray, gestalts' plugins, dev profile) and the Gestalter :5173 on it, with hot reload"
+description = "The desktop app (tray, the plugins of gestalts and gestalt-plugins, dev profile) and the Gestalter :5173 on it, with hot reload"
 depends = ["setup"]
 shell = "bash -c"
 run = """
 trap 'kill 0' EXIT
-cargo run -q -p gestalter -- --profile dev --plugins-dir ../gestalts/plugins --open-url http://localhost:5173/ &
+cargo run -q -p gestalter -- --profile dev --plugins-dir ../gestalts/plugins --plugins-dir ../gestalt-plugins/sam-learns --open-url http://localhost:5173/ &
 pnpm --dir distribution dev &
 wait
 """
