@@ -11,16 +11,17 @@ the Gestalter's own steps.
   avoids.
 - [x] **Pairing**: the desktop's settings show a QR code ("Devices"), list the paired devices and forget them; the
   node does the rest (gestalts' `doc/node.md#pairing-and-the-home-network`).
-- [ ] **Android.** First a spike: the core and one pane on a real phone, to see whether Tauri 2's Android support
-  holds up. Then:
-  - the UI: `@gestalts/ui` and the plugins in Android's WebView (Chrome)
-  - the core native, with `FsStorage` in app-private storage; `@gestalts/client`'s Tauri IPC backend
-  - pairing with `gestalts_peer::paired`: scan the code, `pair`, keep the `PairedNode` (its token privately), then
-    `connect` and sync with a base per `base_name(node_id, folder_id)`; mDNS needs a `MulticastLock` meanwhile
-  - Kotlin for background sync (WorkManager, every 15 minutes at best; at once while the app is open), QR scanning,
-    the camera, sign-in tabs and mDNS
-  - an Android distribution, `id: gestalter-android` (learn, quotes, queue, explorer, alphabet-pronunciation-via-visual-cognates, learn-world-map; no canvas or
-    Canvas2Typ), with tabs of its own, and "last synced" shown
+- [x] **Android** ([android.md](android.md)): the Gestalter in the system WebView over the notes in the app's
+  storage (`gestalts_device`), pairing by QR code, syncing while the app is in the foreground, the
+  `gestalter-android` distribution, "last synced".
+- [ ] Android, next:
+  - background sync: WorkManager (every 15 minutes at best) calling an entry point without the WebView; the
+    gestalts the merge needs are kept in the data folder already
+  - release builds: a signing key, `versionCode` from the version, an `.aab` for the Play Store; and CI
+  - `targetSdk` 37: ask for `ACCESS_LOCAL_NETWORK` at runtime before the first sync (it's declared already), or the
+    phone can't reach the desktop
+  - the camera and sign-in tabs, once a plugin needs them
+  - the barcode scanner's full-screen view: maybe a frame of our own, with a cancel button
 - [ ] Release builds of the desktop app on macOS and Windows runners (their tray and event-loop code is untested),
   and code signing.
 - [ ] CI that checks out gestalts and gestalt-plugins next to this repo, until they are published.

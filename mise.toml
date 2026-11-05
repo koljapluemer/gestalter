@@ -7,12 +7,14 @@ pnpm = "10.32.1"
 uv = "0.13.6"
 "cargo:cargo-packager" = "0.11.8"
 "cargo:cargo-generate-rpm" = "0.21.1"
+"cargo:tauri-cli" = "2.12.4"
 
 [tasks.setup]
 description = "The gestalts and gestalt-plugins checkouts next to this one (packages, the core in wasm, plugins), then this app's JS dependencies"
 run = [
   "mise -C ../gestalt-plugins run setup",
   "pnpm --dir distribution install",
+  "pnpm --dir distribution-android install",
 ]
 
 [tasks.dev]
@@ -34,7 +36,40 @@ run = [
   "cargo clippy --workspace -q -- -D warnings",
   "pnpm --dir distribution lint",
   "pnpm --dir distribution typecheck",
+  "pnpm --dir distribution-android lint",
+  "pnpm --dir distribution-android typecheck",
 ]
+
+[tasks.check-android]
+description = "Clippy on the Android app for arm64 Android (needs the NDK, see doc/android.md)"
+shell = "bash -c"
+run = """
+set -euo pipefail
+source scripts/android-env.sh
+bin="$(echo "$NDK_HOME"/toolchains/llvm/prebuilt/*/bin)"
+export CC_aarch64_linux_android="$bin/aarch64-linux-android24-clang" AR_aarch64_linux_android="$bin/llvm-ar"
+export CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER="$bin/aarch64-linux-android24-clang"
+cargo clippy --manifest-path android/Cargo.toml -q --target aarch64-linux-android -- -D warnings
+"""
+
+[tasks.android-dev]
+description = "The Android app on a connected phone or a running emulator, with the page hot-reloading from this machine"
+depends = ["setup"]
+dir = "android"
+shell = "bash -c"
+run = "source ../scripts/android-env.sh && cargo tauri android dev"
+
+[tasks.android-build]
+description = "A debug APK for arm64 phones, to install with adb (other targets: cd android && cargo tauri android build --debug --apk --target x86_64)"
+depends = ["setup"]
+dir = "android"
+shell = "bash -c"
+run = """
+set -euo pipefail
+source ../scripts/android-env.sh
+cargo tauri android build --debug --apk --target aarch64
+ls gen/android/app/build/outputs/apk/*/debug/*.apk
+"""
 
 [tasks.build]
 description = "Production build of the Gestalter into distribution/dist, which the desktop app embeds"

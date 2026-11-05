@@ -1,1 +1,1 @@
-essentially replicates the desktop experience, but somewhat leaner, and some panes/perspectives (that rely on adapters only available on desktop envs) cannot and should not be integrated
+The Gestalter on Android (Tauri 2): see [`doc/android.md`](../doc/android.md).

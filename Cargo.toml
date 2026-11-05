@@ -1,6 +1,8 @@
 [workspace]
 resolver = "3"
 members = ["desktop"]
+# a workspace of its own (see its Cargo.toml)
+exclude = ["android"]
 
 [workspace.package]
 edition = "2024"

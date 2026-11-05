@@ -1,0 +1,43 @@
+{
+  "name": "gestalter-android",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc -p .",
+    "lint": "oxlint src"
+  },
+  "dependencies": {
+    "@gestalts-plugin/alphabet-pronunciation-via-visual-cognates": "link:../../gestalt-plugins/sam-learns/alphabet-pronunciation-via-visual-cognates",
+    "@gestalts-plugin/explorer": "link:../../gestalts/plugins/explorer",
+    "@gestalts-plugin/learn": "link:../../gestalts/plugins/learn",
+    "@gestalts-plugin/learn-world-map": "link:../../gestalt-plugins/sam-learns/learn-world-map",
+    "@gestalts-plugin/queue": "link:../../gestalts/plugins/queue",
+    "@gestalts-plugin/quotes": "link:../../gestalts/plugins/quotes",
+    "@gestalts/client": "link:../../gestalts/packages/client",
+    "@gestalts/kit": "link:../../gestalts/packages/kit",
+    "@gestalts/sdk": "link:../../gestalts/packages/sdk",
+    "@gestalts/ui": "link:../../gestalts/packages/ui",
+    "@gestalts/vite": "link:../../gestalts/packages/vite",
+    "@tauri-apps/api": "2.12.4",
+    "@tauri-apps/plugin-barcode-scanner": "2.5.3",
+    "lucide-react": "1.66.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.3.3",
+    "@types/node": "26.6.6",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "daisyui": "5.7.50",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "oxlint": "1.90.0",
+    "oxlint-tsgolint": "7.0.2005",
+    "tailwindcss": "4.3.3",
+    "typescript": "7.0.2",
+    "vite": "8.3.5"
+  }
+}
