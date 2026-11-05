@@ -20,6 +20,9 @@ importers:
       '@gestalts-plugin/explorer':
         specifier: link:../../gestalts/plugins/explorer
         version: link:../../gestalts/plugins/explorer
+      '@gestalts-plugin/graph':
+        specifier: link:../../gestalts/plugins/graph
+        version: link:../../gestalts/plugins/graph
       '@gestalts-plugin/learn':
         specifier: link:../../gestalts/plugins/learn
         version: link:../../gestalts/plugins/learn

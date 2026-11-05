@@ -14,6 +14,7 @@
     "@gestalts-plugin/calendar": "link:../../gestalts/plugins/calendar",
     "@gestalts-plugin/canvas": "link:../../gestalts/plugins/canvas",
     "@gestalts-plugin/explorer": "link:../../gestalts/plugins/explorer",
+    "@gestalts-plugin/graph": "link:../../gestalts/plugins/graph",
     "@gestalts-plugin/learn": "link:../../gestalts/plugins/learn",
     "@gestalts-plugin/learn-world-map": "link:../../gestalt-plugins/sam-learns/learn-world-map",
     "@gestalts-plugin/queue": "link:../../gestalts/plugins/queue",
