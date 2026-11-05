@@ -26,6 +26,9 @@ importers:
       '@gestalts-plugin/learn-world-map':
         specifier: link:../../gestalt-plugins/sam-learns/learn-world-map
         version: link:../../gestalt-plugins/sam-learns/learn-world-map
+      '@gestalts-plugin/queue':
+        specifier: link:../../gestalts/plugins/queue
+        version: link:../../gestalts/plugins/queue
       '@gestalts-plugin/quotes':
         specifier: link:../../gestalts/plugins/quotes
         version: link:../../gestalts/plugins/quotes

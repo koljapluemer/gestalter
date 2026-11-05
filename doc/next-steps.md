@@ -19,7 +19,7 @@ the Gestalter's own steps.
     `connect` and sync with a base per `base_name(node_id, folder_id)`; mDNS needs a `MulticastLock` meanwhile
   - Kotlin for background sync (WorkManager, every 15 minutes at best; at once while the app is open), QR scanning,
     the camera, sign-in tabs and mDNS
-  - an Android distribution, `id: gestalter-android` (learn, quotes, explorer, alphabet-pronunciation-via-visual-cognates, learn-world-map; no canvas or
+  - an Android distribution, `id: gestalter-android` (learn, quotes, queue, explorer, alphabet-pronunciation-via-visual-cognates, learn-world-map; no canvas or
     Canvas2Typ), with tabs of its own, and "last synced" shown
 - [ ] Release builds of the desktop app on macOS and Windows runners (their tray and event-loop code is untested),
   and code signing.
