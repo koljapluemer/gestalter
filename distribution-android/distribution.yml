@@ -1,5 +1,5 @@
 # The Gestalter on Android (`id`, kept for good: tabs are kept per distribution): the plugins that work on a phone,
 # without a node's services (no Canvas2Typ) or a big screen (no canvas). Tabs start with these.
 id: gestalter-android
-default_panes: [explorer/explorer, explorer/new, learn/learn, quotes/quotes, queue/queue, alphabet-pronunciation-via-visual-cognates/practice, learn-world-map/practice]
+default_panes: [explorer/explorer, learn/learn, quotes/quotes, queue/queue, alphabet-pronunciation-via-visual-cognates/practice, learn-world-map/practice]
 install_ui: true
