@@ -19,6 +19,7 @@
     "@gestalts-plugin/learn": "link:../../gestalts/plugins/learn",
     "@gestalts-plugin/learn-world-map": "link:../../gestalt-plugins/sam-learns/learn-world-map",
     "@gestalts-plugin/ollama": "link:../../gestalts/plugins/ollama",
+    "@gestalts-plugin/projects": "link:../../gestalts/plugins/projects",
     "@gestalts-plugin/questions": "link:../../gestalts/plugins/questions",
     "@gestalts-plugin/queue": "link:../../gestalts/plugins/queue",
     "@gestalts-plugin/quotes": "link:../../gestalts/plugins/quotes",

@@ -35,6 +35,9 @@ importers:
       '@gestalts-plugin/ollama':
         specifier: link:../../gestalts/plugins/ollama
         version: link:../../gestalts/plugins/ollama
+      '@gestalts-plugin/projects':
+        specifier: link:../../gestalts/plugins/projects
+        version: link:../../gestalts/plugins/projects
       '@gestalts-plugin/questions':
         specifier: link:../../gestalts/plugins/questions
         version: link:../../gestalts/plugins/questions
