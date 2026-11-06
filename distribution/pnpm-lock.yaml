@@ -20,6 +20,9 @@ importers:
       '@gestalts-plugin/explorer':
         specifier: link:../../gestalts/plugins/explorer
         version: link:../../gestalts/plugins/explorer
+      '@gestalts-plugin/float':
+        specifier: link:../../gestalts/plugins/float
+        version: link:../../gestalts/plugins/float
       '@gestalts-plugin/graph':
         specifier: link:../../gestalts/plugins/graph
         version: link:../../gestalts/plugins/graph
@@ -29,6 +32,12 @@ importers:
       '@gestalts-plugin/learn-world-map':
         specifier: link:../../gestalt-plugins/sam-learns/learn-world-map
         version: link:../../gestalt-plugins/sam-learns/learn-world-map
+      '@gestalts-plugin/ollama':
+        specifier: link:../../gestalts/plugins/ollama
+        version: link:../../gestalts/plugins/ollama
+      '@gestalts-plugin/questions':
+        specifier: link:../../gestalts/plugins/questions
+        version: link:../../gestalts/plugins/questions
       '@gestalts-plugin/queue':
         specifier: link:../../gestalts/plugins/queue
         version: link:../../gestalts/plugins/queue

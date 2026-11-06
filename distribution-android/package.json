@@ -11,8 +11,10 @@
   "dependencies": {
     "@gestalts-plugin/alphabet-pronunciation-via-visual-cognates": "link:../../gestalt-plugins/sam-learns/alphabet-pronunciation-via-visual-cognates",
     "@gestalts-plugin/explorer": "link:../../gestalts/plugins/explorer",
+    "@gestalts-plugin/float": "link:../../gestalts/plugins/float",
     "@gestalts-plugin/learn": "link:../../gestalts/plugins/learn",
     "@gestalts-plugin/learn-world-map": "link:../../gestalt-plugins/sam-learns/learn-world-map",
+    "@gestalts-plugin/questions": "link:../../gestalts/plugins/questions",
     "@gestalts-plugin/queue": "link:../../gestalts/plugins/queue",
     "@gestalts-plugin/quotes": "link:../../gestalts/plugins/quotes",
     "@gestalts/client": "link:../../gestalts/packages/client",

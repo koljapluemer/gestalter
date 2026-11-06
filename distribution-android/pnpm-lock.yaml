@@ -14,12 +14,18 @@ importers:
       '@gestalts-plugin/explorer':
         specifier: link:../../gestalts/plugins/explorer
         version: link:../../gestalts/plugins/explorer
+      '@gestalts-plugin/float':
+        specifier: link:../../gestalts/plugins/float
+        version: link:../../gestalts/plugins/float
       '@gestalts-plugin/learn':
         specifier: link:../../gestalts/plugins/learn
         version: link:../../gestalts/plugins/learn
       '@gestalts-plugin/learn-world-map':
         specifier: link:../../gestalt-plugins/sam-learns/learn-world-map
         version: link:../../gestalt-plugins/sam-learns/learn-world-map
+      '@gestalts-plugin/questions':
+        specifier: link:../../gestalts/plugins/questions
+        version: link:../../gestalts/plugins/questions
       '@gestalts-plugin/queue':
         specifier: link:../../gestalts/plugins/queue
         version: link:../../gestalts/plugins/queue
