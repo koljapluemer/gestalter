@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useConnector, useHostRepo } from '@gestalts/client';
 import { forget, pair } from '@gestalts/client/tauri';
-import { Conflicts } from '@gestalts/kit';
 import { Format, cancel, requestPermissions, scan } from '@tauri-apps/plugin-barcode-scanner';
 
 const message = (e: unknown) => (e instanceof Error ? e.message : String(e));
@@ -12,7 +11,6 @@ export function Pairing() {
   return (
     <div className="flex w-[min(20rem,calc(100vw-2rem))] flex-col gap-2">
       {status.node ? <Paired /> : <Unpaired />}
-      <Conflicts />
     </div>
   );
 }

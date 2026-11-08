@@ -8,42 +8,21 @@ importers:
 
   .:
     dependencies:
-      '@gestalts-plugin/alphabet-pronunciation-via-visual-cognates':
-        specifier: link:../../gestalt-plugins/sam-learns/alphabet-pronunciation-via-visual-cognates
-        version: link:../../gestalt-plugins/sam-learns/alphabet-pronunciation-via-visual-cognates
-      '@gestalts-plugin/explorer':
-        specifier: link:../../gestalts/plugins/explorer
-        version: link:../../gestalts/plugins/explorer
-      '@gestalts-plugin/float':
-        specifier: link:../../gestalts/plugins/float
-        version: link:../../gestalts/plugins/float
-      '@gestalts-plugin/learn':
-        specifier: link:../../gestalts/plugins/learn
-        version: link:../../gestalts/plugins/learn
-      '@gestalts-plugin/learn-world-map':
-        specifier: link:../../gestalt-plugins/sam-learns/learn-world-map
-        version: link:../../gestalt-plugins/sam-learns/learn-world-map
-      '@gestalts-plugin/questions':
-        specifier: link:../../gestalts/plugins/questions
-        version: link:../../gestalts/plugins/questions
-      '@gestalts-plugin/queue':
-        specifier: link:../../gestalts/plugins/queue
-        version: link:../../gestalts/plugins/queue
-      '@gestalts-plugin/quotes':
-        specifier: link:../../gestalts/plugins/quotes
-        version: link:../../gestalts/plugins/quotes
       '@gestalts/client':
         specifier: link:../../gestalts/packages/client
         version: link:../../gestalts/packages/client
+      '@gestalts/host':
+        specifier: link:../../gestalts/packages/host
+        version: link:../../gestalts/packages/host
       '@gestalts/kit':
         specifier: link:../../gestalts/packages/kit
         version: link:../../gestalts/packages/kit
-      '@gestalts/sdk':
-        specifier: link:../../gestalts/packages/sdk
-        version: link:../../gestalts/packages/sdk
-      '@gestalts/ui':
-        specifier: link:../../gestalts/packages/ui
-        version: link:../../gestalts/packages/ui
+      '@gestalts/learning':
+        specifier: link:../../gestalts/packages/learning
+        version: link:../../gestalts/packages/learning
+      '@gestalts/view':
+        specifier: link:../../gestalts/packages/view
+        version: link:../../gestalts/packages/view
       '@gestalts/vite':
         specifier: link:../../gestalts/packages/vite
         version: link:../../gestalts/packages/vite

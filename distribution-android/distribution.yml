@@ -1,5 +1,11 @@
-# The Gestalter on Android (`id`, kept for good: tabs are kept per distribution): the plugins that work on a phone,
-# without a node's services (no Canvas2Typ; Questions asks its first questions) or a big screen (no canvas). Tabs start with these.
-id: gestalter-android
-default_panes: [explorer/explorer, learn/learn, quotes/quotes, queue/queue, float/float, questions/questions, alphabet-pronunciation-via-visual-cognates/practice, learn-world-map/practice]
+# The Gestalter on Android (`id` is its for good: tabs are kept per distribution). `core` plugins are always there;
+# `plugins` can be installed and uninstalled. Paths are from this file.
+id: gestalter-phone
+core:
+  - ../../gestalts/plugins/quick-note
+  - ../../gestalts/plugins/note-crud
+  - ../../gestalts/plugins/note-queue
+plugins:
+  - ../../gestalt-plugins/sam-learns/alphabet-pronunciation-trainer
+default_views: [quick-note, note-crud, note-queue]
 install_ui: true

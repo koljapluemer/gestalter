@@ -18,20 +18,15 @@ pub const NAME: &str = "gestalter";
 pub const OLD_NAME: &str = "gestalts-connector";
 /// Other web frontends allowed to use the node, besides localhost.
 pub const ORIGINS: &[&str] = &[
-    // TODO: remove once the hosted Gestalter is taken down; until then its users can sync their browser's notes into
-    // the folder one last time
-    "https://gestalter.koljasam.com",
     // TODO: loops-for-learning's origin, once it is deployed
 ];
 
-/// The plugins the Gestalter ships (its `@gestalts-plugin/*` dependencies), copied by `build.rs`.
+/// The plugins the Gestalter ships, copied by `build.rs`.
 static BUILTIN: Dir<'static> = include_dir!("$OUT_DIR/plugins");
-// TODO: publish the SDK to PyPI and depend on a version instead, which third-party plugins need anyway
-static SDK: Dir<'static> = include_dir!("$OUT_DIR/sdk");
 /// The Gestalter's web build, served at `/`.
 static APP: Dir<'static> = include_dir!("$OUT_DIR/app");
 
-pub const EMBEDDED: Embedded = Embedded { name: NAME, app: Some(&APP), builtin: Some((&BUILTIN, &SDK)), origins: ORIGINS };
+pub const EMBEDDED: Embedded = Embedded { name: NAME, app: Some(&APP), builtin: Some(&BUILTIN), origins: ORIGINS };
 
 #[derive(Parser)]
 #[command(version, about)]

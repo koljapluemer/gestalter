@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useConnector } from '@gestalts/client';
-import { Conflicts } from '@gestalts/kit';
 import { desktop, type DesktopStatus, type PairingOffer } from './desktop';
 
 const STATE: Record<string, string> = { stopped: 'stopped', starting: 'starting…', ready: 'ready', running: 'running', error: 'error' };
@@ -63,8 +62,6 @@ export function DesktopSettings() {
           {status.clients.map((c) => <div key={c.origin} className="truncate text-xs">{c.origin} · {c.seconds_ago} s ago</div>)}
         </section>
       )}
-
-      <Conflicts />
 
       <div className="flex items-center gap-2 border-t border-base-300 pt-2">
         {status.autostart !== null && (

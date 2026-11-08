@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Blocks, HardDrive } from 'lucide-react';
-import { distribution, plugins } from 'virtual:gestalts-plugins';
+import { registry } from 'virtual:gestalts-plugins';
 import { RepoProvider, nodeHealth, useConnector, type NodeHealth } from '@gestalts/client';
-import { DebugLogButton } from '@gestalts/ui/debug';
-import { PaneTabs, PluginSettings, usePluginRepo, type PluginEntry } from '@gestalts/ui/host';
+import { DebugLogButton, PluginSettings, ViewTabs, usePluginRepo, type PluginEntry } from '@gestalts/host';
+import css from './app.css?inline';
 import { DesktopSettings } from './DesktopSettings';
 import { NODE, desktop } from './desktop';
-
-const REGISTRY = { distribution, plugins };
 
 /** The Gestalter, served by its desktop app: the notes are the folder the app serves, used directly. */
 export function App() {
@@ -22,14 +20,14 @@ export function App() {
 }
 
 function Gestalter() {
-  const { repo, installed, decks, error } = usePluginRepo({ node: NODE }, REGISTRY);
+  const { repo, installed, decks, error } = usePluginRepo({ node: NODE }, registry);
   if (error) return <Failure message={`Could not open your notes: ${error}`} />;
   if (!repo) return <Spinner />;
   return (
     <RepoProvider repo={repo}>
-      <PaneTabs registry={REGISTRY} title="Gestalter" end={<>
+      <ViewTabs registry={registry} css={css} title="Gestalter" end={<>
         <DebugLogButton />
-        {distribution.install_ui && <PluginsMenu mounted={installed} decks={decks} />}
+        {registry.distribution.install_ui && <PluginsMenu mounted={installed} decks={decks} />}
         <DesktopMenu />
       </>} />
     </RepoProvider>
@@ -48,7 +46,7 @@ function ChooseFolder({ onChosen }: { onChosen: (folder: NonNullable<NodeHealth[
       <div className="flex max-w-md flex-col gap-3">
         <h1 className="text-xl font-semibold">Welcome to the Gestalter</h1>
         <p>Your notes live in a folder on this computer, as plain files you can back up and sync like any others. Choose
-          an empty folder to start, or one you used before.</p>
+          an empty folder to start, or one you've used with this version before.</p>
         <button type="button" className="btn btn-primary self-start" onClick={choose}>Choose folder…</button>
         {error && <p className="text-sm text-error">{error}</p>}
       </div>
@@ -61,7 +59,7 @@ function PluginsMenu({ mounted, decks }: { mounted: PluginEntry[]; decks: string
     <details className="dropdown dropdown-end">
       <summary className="btn btn-sm btn-ghost btn-square" title="Plugins"><Blocks className="size-4" /></summary>
       <div className="dropdown-content z-50 mt-2 rounded-box border border-base-300 bg-base-100 p-3 shadow">
-        <PluginSettings registry={REGISTRY} mounted={mounted} decks={decks} />
+        <PluginSettings registry={registry} mounted={mounted} decks={decks} />
       </div>
     </details>
   );

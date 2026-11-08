@@ -20,7 +20,7 @@ struct App {
 impl Host for App {
     fn event(&self, event: Event) {
         let sent = match event {
-            Event::Changed { notes, blobs } => self.handle.emit(CHANGED_EVENT, serde_json::json!({ "notes": notes, "blobs": blobs })),
+            Event::Changed { ymls, blobs } => self.handle.emit(CHANGED_EVENT, serde_json::json!({ "ymls": ymls, "blobs": blobs })),
             Event::Status(status) => self.handle.emit(STATUS_EVENT, status),
         };
         if let Err(e) = sent {
@@ -44,43 +44,43 @@ fn e(e: impl std::fmt::Display) -> String {
 }
 
 #[tauri::command]
-async fn notes_list(d: Device<'_>) -> Res<Vec<String>> {
-    d.list_notes().await.map_err(e)
+async fn ymls_list(d: Device<'_>) -> Res<Vec<String>> {
+    d.list_ymls().await.map_err(e)
 }
 
 #[tauri::command]
-async fn note_read(d: Device<'_>, key: String) -> Res<Option<String>> {
-    d.read_note(key).await.map_err(e)
+async fn yml_read(d: Device<'_>, key: String) -> Res<Option<String>> {
+    d.read_yml(key).await.map_err(e)
 }
 
 #[tauri::command]
-async fn notes_read(d: Device<'_>, keys: Vec<String>) -> Res<Vec<(String, String)>> {
-    d.read_notes(keys).await.map_err(e)
+async fn ymls_read(d: Device<'_>, keys: Vec<String>) -> Res<Vec<(String, String)>> {
+    d.read_ymls(keys).await.map_err(e)
 }
 
 #[tauri::command]
-async fn notes_read_all(d: Device<'_>) -> Res<Vec<(String, String)>> {
-    d.read_all_notes().await.map_err(e)
+async fn ymls_read_all(d: Device<'_>) -> Res<Vec<(String, String)>> {
+    d.read_all_ymls().await.map_err(e)
 }
 
 #[tauri::command]
-async fn notes_hashes(d: Device<'_>) -> Res<std::collections::BTreeMap<String, String>> {
-    d.note_hashes().await.map_err(e)
+async fn ymls_hashes(d: Device<'_>) -> Res<std::collections::BTreeMap<String, String>> {
+    d.yml_hashes().await.map_err(e)
 }
 
 #[tauri::command]
-async fn note_write(d: Device<'_>, key: String, text: String) -> Res<()> {
-    d.write_note(key, text).await.map_err(e)
+async fn yml_write(d: Device<'_>, key: String, text: String) -> Res<()> {
+    d.write_yml(key, text).await.map_err(e)
 }
 
 #[tauri::command]
-async fn notes_write(d: Device<'_>, notes: Vec<(String, String)>) -> Res<()> {
-    d.write_notes(notes).await.map_err(e)
+async fn ymls_write(d: Device<'_>, notes: Vec<(String, String)>) -> Res<()> {
+    d.write_ymls(notes).await.map_err(e)
 }
 
 #[tauri::command]
-async fn note_delete(d: Device<'_>, key: String) -> Res<()> {
-    d.delete_note(key).await.map_err(e)
+async fn yml_delete(d: Device<'_>, key: String) -> Res<()> {
+    d.delete_yml(key).await.map_err(e)
 }
 
 #[tauri::command]
@@ -163,7 +163,7 @@ pub fn run() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
-            notes_list, note_read, notes_read, notes_read_all, notes_hashes, note_write, notes_write, note_delete,
+            ymls_list, yml_read, ymls_read, ymls_read_all, ymls_hashes, yml_write, ymls_write, yml_delete,
             blobs_list, blob_read, blob_write, blob_delete, gestalts_set, sync_status, sync_now, set_active, pair, forget,
         ])
         .run(tauri::generate_context!())

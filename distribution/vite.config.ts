@@ -23,7 +23,7 @@ const toNode: ProxyOptions = {
 export default defineConfig({
   server: {
     port: 5173,
-    proxy: Object.fromEntries(['/health', '/events', '/notes', '/blobs', '/plugins', '/services', '/control'].map((p) => [p, toNode])),
+    proxy: Object.fromEntries(['/health', '/events', '/ymls', '/sync', '/blobs', '/plugins', '/services', '/control'].map((p) => [p, toNode])),
   },
   preview: { port: 4173 },
   plugins: [gestaltsPlugins(), react(), tailwindcss()],

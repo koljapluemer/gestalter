@@ -18,7 +18,8 @@ auto-launch = "0.6"
 opener = "0.9"
 
 [build-dependencies]
-serde_json.workspace = true
+serde = { workspace = true, features = ["derive"] }
+serde_yaml_ng.workspace = true
 
 # Linux: StatusNotifierItem over D-Bus, so no GTK/appindicator; it runs its own thread, no event loop needed
 [target.'cfg(target_os = "linux")'.dependencies]

@@ -10,29 +10,15 @@
     "lint": "oxlint src"
   },
   "dependencies": {
-    "@gestalts-plugin/alphabet-pronunciation-via-visual-cognates": "link:../../gestalt-plugins/sam-learns/alphabet-pronunciation-via-visual-cognates",
-    "@gestalts-plugin/calendar": "link:../../gestalts/plugins/calendar",
-    "@gestalts-plugin/canvas": "link:../../gestalts/plugins/canvas",
-    "@gestalts-plugin/explorer": "link:../../gestalts/plugins/explorer",
-    "@gestalts-plugin/float": "link:../../gestalts/plugins/float",
-    "@gestalts-plugin/graph": "link:../../gestalts/plugins/graph",
-    "@gestalts-plugin/learn": "link:../../gestalts/plugins/learn",
-    "@gestalts-plugin/learn-world-map": "link:../../gestalt-plugins/sam-learns/learn-world-map",
-    "@gestalts-plugin/ollama": "link:../../gestalts/plugins/ollama",
-    "@gestalts-plugin/projects": "link:../../gestalts/plugins/projects",
-    "@gestalts-plugin/questions": "link:../../gestalts/plugins/questions",
-    "@gestalts-plugin/queue": "link:../../gestalts/plugins/queue",
-    "@gestalts-plugin/quotes": "link:../../gestalts/plugins/quotes",
-    "@gestalts-plugin/sources": "link:../../gestalts/plugins/sources",
-    "@gestalts-plugin/typst": "link:../../gestalts/plugins/typst",
     "@gestalts/client": "link:../../gestalts/packages/client",
     "@gestalts/kit": "link:../../gestalts/packages/kit",
-    "@gestalts/sdk": "link:../../gestalts/packages/sdk",
-    "@gestalts/ui": "link:../../gestalts/packages/ui",
     "@gestalts/vite": "link:../../gestalts/packages/vite",
     "lucide-react": "1.66.0",
     "react": "19.3.1",
-    "react-dom": "19.3.1"
+    "react-dom": "19.3.1",
+    "@gestalts/host": "link:../../gestalts/packages/host",
+    "@gestalts/view": "link:../../gestalts/packages/view",
+    "@gestalts/learning": "link:../../gestalts/packages/learning"
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",

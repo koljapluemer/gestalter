@@ -1,29 +1,27 @@
 import { useState } from 'react';
 import { Blocks, MonitorSmartphone } from 'lucide-react';
-import { distribution, plugins } from 'virtual:gestalts-plugins';
-import { RepoProvider, useConnector, type NotesIn } from '@gestalts/client';
+import { registry } from 'virtual:gestalts-plugins';
+import { RepoProvider, useConnector, type YmlsIn } from '@gestalts/client';
 import { inTauri } from '@gestalts/client/tauri';
-import { DebugLogButton } from '@gestalts/ui/debug';
-import { PaneTabs, PluginSettings, usePluginRepo, type PluginEntry } from '@gestalts/ui/host';
+import { DebugLogButton, PluginSettings, ViewTabs, usePluginRepo, type PluginEntry } from '@gestalts/host';
+import css from './app.css?inline';
 import { Pairing } from './Pairing';
-
-const REGISTRY = { distribution, plugins };
 
 /**
  * The Gestalter on a phone: the notes are the app's (`gestalts_device`), synced with the desktop it paired with. In a
  * plain browser (developing the page), they stay in the browser.
  */
-const WHERE: NotesIn = inTauri() ? { native: 'tauri' } : { dir: 'gestalter-android' };
+const WHERE: YmlsIn = inTauri() ? { native: 'tauri' } : { dir: 'gestalter-phone' };
 
 export function App() {
-  const { repo, installed, decks, error } = usePluginRepo(WHERE, REGISTRY);
+  const { repo, installed, decks, error } = usePluginRepo(WHERE, registry);
   if (error) return <Failure message={`Could not open your notes: ${error}`} />;
   if (!repo) return <div className="flex h-dvh items-center justify-center"><span className="loading loading-spinner" /></div>;
   return (
     <RepoProvider repo={repo}>
-      <PaneTabs registry={REGISTRY} title="Gestalter" end={<>
+      <ViewTabs registry={registry} css={css} title="Gestalter" end={<>
         <DebugLogButton />
-        {distribution.install_ui && <PluginsMenu mounted={installed} decks={decks} />}
+        {registry.distribution.install_ui && <PluginsMenu mounted={installed} decks={decks} />}
         {WHERE.native && <SyncMenu />}
       </>} />
     </RepoProvider>
@@ -35,7 +33,7 @@ function PluginsMenu({ mounted, decks }: { mounted: PluginEntry[]; decks: string
     <details className="dropdown dropdown-end">
       <summary className="btn btn-sm btn-ghost btn-square" title="Plugins"><Blocks className="size-4" /></summary>
       <div className="dropdown-content z-50 mt-2 max-w-[calc(100vw-2rem)] rounded-box border border-base-300 bg-base-100 p-3 shadow">
-        <PluginSettings registry={REGISTRY} mounted={mounted} decks={decks} />
+        <PluginSettings registry={registry} mounted={mounted} decks={decks} />
       </div>
     </details>
   );

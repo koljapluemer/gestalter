@@ -1,11 +1,9 @@
-//! Copies what the node needs of the Gestalter's plugins (the `@gestalts-plugin/*` dependencies of its web app:
-//! manifests, gestalts, workers; not their UI or decks, and never `node_modules`) to `$OUT_DIR/plugins`, and the
-//! Python SDK their workers use to `$OUT_DIR/sdk`, and the web app's build (`distribution/dist`) to `$OUT_DIR/app`,
-//! which `include_dir!` embeds.
+//! Copies what the node needs of the plugins `distribution.yml` lists (`plugin.yml`, `gestalts/`, `backend.py`; a
+//! plugin's view and decks are in the web build) to `$OUT_DIR/plugins`, and the web app's build (`distribution/dist`) to
+//! `$OUT_DIR/app`, which `include_dir!` embeds.
 //!
-//! Plugins are found where pnpm installed them for the web app, so run `mise run setup` first. A release build needs
-//! the web app built (`mise run build`); a debug build without it serves a page saying so (in development the
-//! Gestalter comes from Vite anyway).
+//! A release build needs the web app built (`mise run build`); a debug build without it serves a page saying so (in
+//! development the Gestalter comes from Vite anyway).
 
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -13,43 +11,40 @@ use std::path::{Path, PathBuf};
 /// The web app whose plugins the desktop app ships.
 const APP: &str = "../distribution";
 
+#[derive(serde::Deserialize)]
+struct Distribution {
+    #[serde(default)]
+    core: Vec<String>,
+    #[serde(default)]
+    plugins: Vec<String>,
+}
+
 fn main() {
     let app = Path::new(APP);
-    let manifest = app.join("package.json");
+    let manifest = app.join("distribution.yml");
     println!("cargo:rerun-if-changed={}", manifest.display());
-    let pkg: serde_json::Value = serde_json::from_str(&fs::read_to_string(&manifest).expect("the web app has a package.json")).expect("package.json is JSON");
-    let ids: Vec<&str> = pkg["dependencies"].as_object().into_iter().flatten()
-        .filter_map(|(name, _)| name.strip_prefix("@gestalts-plugin/")).collect();
+    let d: Distribution = serde_yaml_ng::from_str(&fs::read_to_string(&manifest).expect("the web app has a distribution.yml")).expect("distribution.yml is valid");
 
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
-    let (plugins_out, sdk_out, app_out) = (out.join("plugins"), out.join("sdk"), out.join("app"));
-    for dir in [&plugins_out, &sdk_out, &app_out] {
+    let (plugins_out, app_out) = (out.join("plugins"), out.join("app"));
+    for dir in [&plugins_out, &app_out] {
         let _ = fs::remove_dir_all(dir);
         fs::create_dir_all(dir).unwrap();
     }
-    let mut sdk: Option<PathBuf> = None;
-    for id in ids {
-        let link = app.join("node_modules/@gestalts-plugin").join(id);
-        let src = fs::canonicalize(&link).unwrap_or_else(|_| panic!("{} is missing; run `mise run setup`", link.display()));
+    for path in d.core.iter().chain(&d.plugins) {
+        let src = fs::canonicalize(app.join(path)).unwrap_or_else(|_| panic!("{path} is missing"));
         assert!(src.join("plugin.yml").is_file(), "{} has no plugin.yml", src.display());
         // include_dir! doesn't track changes by itself
         println!("cargo:rerun-if-changed={}", src.display());
-        let dest = plugins_out.join(id);
+        let dest = plugins_out.join(src.file_name().unwrap());
         fs::create_dir_all(&dest).unwrap();
         fs::copy(src.join("plugin.yml"), dest.join("plugin.yml")).unwrap();
-        for sub in ["gestalts", "worker"] {
-            if src.join(sub).is_dir() {
-                copy_tree(&src.join(sub), &dest.join(sub));
-            }
+        if src.join("gestalts").is_dir() {
+            copy_tree(&src.join("gestalts"), &dest.join("gestalts"));
         }
-        // workers depend on the SDK by relative path (`../../../sdk/python`), next to `plugins/`
-        if src.join("worker").is_dir() && sdk.is_none() {
-            sdk = Some(fs::canonicalize(src.join("../../sdk/python")).expect("the SDK next to the plugins"));
+        if src.join("backend.py").is_file() {
+            fs::copy(src.join("backend.py"), dest.join("backend.py")).unwrap();
         }
-    }
-    if let Some(sdk) = sdk {
-        println!("cargo:rerun-if-changed={}", sdk.display());
-        copy_tree(&sdk, &sdk_out);
     }
 
     let dist = app.join("dist");
