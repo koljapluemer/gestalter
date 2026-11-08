@@ -1,5 +1,5 @@
-//! The tray: one desktop app per user, shown as a tray icon. It runs the node, which serves the Gestalter on
-//! 127.0.0.1, and opens that in the default browser. The Gestalter's Desktop settings use what this app can do (the
+//! The tray: one desktop app per user, shown as a tray icon. It runs the node, which serves the gestalter on
+//! 127.0.0.1, and opens that in the default browser. The gestalter's Desktop settings use what this app can do (the
 //! folder picker, the file manager, start on login) through the node's `Shell`.
 
 use std::path::{Path, PathBuf};
@@ -42,7 +42,7 @@ fn error_dialog(message: &str) {
     let _ = rfd::MessageDialog::new().set_title(TITLE).set_description(message).set_level(rfd::MessageLevel::Error).show();
 }
 
-/// If we already run on the port, ask that instance to open the Gestalter and report `true`.
+/// If we already run on the port, ask that instance to open the gestalter and report `true`.
 fn hand_over_to_running(opts: &Opts, paths: &Paths) -> Result<bool, String> {
     let base = format!("http://127.0.0.1:{}", opts.port);
     let client = reqwest::blocking::Client::builder().timeout(Duration::from_secs(2)).build().map_err(|e| e.to_string())?;
@@ -88,7 +88,7 @@ impl Shell for DesktopShell {
 }
 
 fn pick_folder() -> Option<PathBuf> {
-    rfd::FileDialog::new().set_title("Choose your Gestalter folder").pick_folder()
+    rfd::FileDialog::new().set_title("Choose your gestalter folder").pick_folder()
 }
 
 /// Start on login under `name` (plus the profile), pointing at the installed binary (or the AppImage, whose mount
@@ -129,7 +129,7 @@ struct App {
     open: MenuId,
     choose: MenuId,
     quit: MenuId,
-    /// where the Gestalter is: the node's own address, or the dev server's
+    /// where the gestalter is: the node's own address, or the dev server's
     open_url: String,
     http: reqwest::blocking::Client,
 }
@@ -164,7 +164,7 @@ impl App {
             .with_menu(Box::new(menu))
             .with_menu_on_left_click(false)
             .build();
-        // without a tray (e.g. GNOME without an extension), launching the app again still opens the Gestalter
+        // without a tray (e.g. GNOME without an extension), launching the app again still opens the gestalter
         let tray = tray.map_err(|e| eprintln!("gestalter: no tray icon: {e}")).ok();
         let open_url = open_url.unwrap_or_else(|| format!("{}/", server.address));
         let http = reqwest::blocking::Client::builder().timeout(Duration::from_secs(10)).build().map_err(|e| e.to_string())?;
@@ -198,7 +198,7 @@ impl App {
         if let Err(e) = opener::open_browser(&self.open_url) { error_dialog(&format!("Cannot open {}: {e}", self.open_url)); }
     }
 
-    /// From the tray: the picker, then the node opens the folder as if the Gestalter had asked.
+    /// From the tray: the picker, then the node opens the folder as if the gestalter had asked.
     fn choose_folder(&self) {
         let (Some(server), Some(path)) = (&self.server, pick_folder()) else { return };
         let sent = self.http.post(format!("{}/control/folder", server.address)).header(CONTROL_HEADER, &server.control_token)

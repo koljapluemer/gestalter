@@ -3,7 +3,7 @@
 
 [package]
 name = "gestalter-android"
-description = "The Gestalter on Android: the page in a WebView, the notes in the app's storage, synced with the paired desktop"
+description = "The gestalter on Android: the page in a WebView, the notes in the app's storage, synced with the paired desktop"
 edition = "2024"
 version = "0.1.0"
 publish = false

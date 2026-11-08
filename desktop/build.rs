@@ -3,7 +3,7 @@
 //! `$OUT_DIR/app`, which `include_dir!` embeds.
 //!
 //! A release build needs the web app built (`mise run build`); a debug build without it serves a page saying so (in
-//! development the Gestalter comes from Vite anyway).
+//! development the gestalter comes from Vite anyway).
 
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -54,8 +54,8 @@ fn main() {
     } else if std::env::var("PROFILE").as_deref() == Ok("release") {
         panic!("{} is missing; run `mise run build` first", dist.join("index.html").display());
     } else {
-        fs::write(app_out.join("index.html"), "<!doctype html><meta charset=utf-8><title>Gestalter</title>\
-            <p>This debug build has no Gestalter built in. Run <code>mise run build</code>, or use the dev server \
+        fs::write(app_out.join("index.html"), "<!doctype html><meta charset=utf-8><title>gestalter</title>\
+            <p>This debug build has no gestalter built in. Run <code>mise run build</code>, or use the dev server \
             (<code>mise run dev</code>).</p>\n").unwrap();
     }
 }

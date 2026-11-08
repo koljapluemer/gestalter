@@ -34,7 +34,7 @@ export function DesktopSettings() {
           <button type="button" className="btn btn-sm" onClick={() => act(desktop.chooseFolder)}>Choose another folder…</button>
           <button type="button" className="btn btn-sm btn-ghost" onClick={() => act(desktop.reveal)}>Show</button>
         </div>
-        <p className="text-xs text-base-content/60">Choosing another folder reloads the Gestalter with its notes.</p>
+        <p className="text-xs text-base-content/60">Choosing another folder reloads the gestalter with its notes.</p>
       </section>
 
       <section className="flex flex-col gap-1">
@@ -117,7 +117,7 @@ function Devices({ status, onError }: { status: DesktopStatus; onError: (e: stri
         <div className="flex flex-col items-center gap-1">
           <img className="h-48 w-48 bg-white" alt="Pairing code" src={`data:image/svg+xml;charset=utf-8,${encodeURIComponent(shown.svg)}`} />
           <p className="text-xs text-base-content/60">
-            Scan this with the Gestalter on your phone, on the same network. Valid for {Math.floor(left / 60)}:{String(left % 60).padStart(2, '0')}.
+            Scan this with the gestalter on your phone, on the same network. Valid for {Math.floor(left / 60)}:{String(left % 60).padStart(2, '0')}.
           </p>
           <button type="button" className="btn btn-sm btn-ghost" onClick={cancel}>Cancel</button>
         </div>

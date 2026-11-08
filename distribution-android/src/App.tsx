@@ -8,7 +8,7 @@ import css from './app.css?inline';
 import { Pairing } from './Pairing';
 
 /**
- * The Gestalter on a phone: the notes are the app's (`gestalts_device`), synced with the desktop it paired with. In a
+ * The gestalter on a phone: the notes are the app's (`gestalts_device`), synced with the desktop it paired with. In a
  * plain browser (developing the page), they stay in the browser.
  */
 const WHERE: YmlsIn = inTauri() ? { native: 'tauri' } : { dir: 'gestalter-phone' };
@@ -19,7 +19,7 @@ export function App() {
   if (!repo) return <div className="flex h-dvh items-center justify-center"><span className="loading loading-spinner" /></div>;
   return (
     <RepoProvider repo={repo}>
-      <ViewTabs registry={registry} css={css} title="Gestalter" end={<>
+      <ViewTabs registry={registry} css={css} title="gestalter" end={<>
         <DebugLogButton />
         {registry.distribution.install_ui && <PluginsMenu mounted={installed} decks={decks} />}
         {WHERE.native && <SyncMenu />}

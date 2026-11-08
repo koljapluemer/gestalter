@@ -41,7 +41,7 @@ function Unpaired() {
   return (
     <>
       <p className="text-sm text-base-content/70">
-        Your notes are on this phone. To sync them with your computer, open the Gestalter there, then its settings, then
+        Your notes are on this phone. To sync them with your computer, open the gestalter there, then its settings, then
         "Devices", and scan the code it shows. Both need to be on the same Wi-Fi.
       </p>
       <button type="button" className="btn btn-sm btn-primary" disabled={busy} onClick={() => void run(scanCode)}>

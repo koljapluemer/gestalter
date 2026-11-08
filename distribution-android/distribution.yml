@@ -1,4 +1,4 @@
-# The Gestalter on Android (`id` is its for good: tabs are kept per distribution). `core` plugins are always there;
+# The gestalter on Android (`id` is its for good: tabs are kept per distribution). `core` plugins are always there;
 # `plugins` can be installed and uninstalled. Paths are from this file.
 id: gestalter-phone
 core:

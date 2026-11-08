@@ -12,8 +12,8 @@ case "$(uname -s)" in
       sudo apt-get install -y --reinstall "$(realpath "$(newest '*.deb')")"
     elif [ -n "$(newest '*.AppImage')" ]; then
       mkdir -p ~/Applications
-      install -m 755 "$(newest '*.AppImage')" ~/Applications/Gestalter.AppImage
-      echo "installed ~/Applications/Gestalter.AppImage"
+      install -m 755 "$(newest '*.AppImage')" ~/Applications/gestalter.AppImage
+      echo "installed ~/Applications/gestalter.AppImage"
     else
       echo "no package for this Linux in $dir" >&2; exit 1
     fi ;;
@@ -22,9 +22,9 @@ case "$(uname -s)" in
     mnt=$(mktemp -d)
     hdiutil attach -nobrowse -quiet -mountpoint "$mnt" "$dmg"
     trap 'hdiutil detach -quiet "$mnt"' EXIT
-    rm -rf "/Applications/Gestalter.app"
-    cp -R "$mnt/Gestalter.app" /Applications/
-    echo "installed /Applications/Gestalter.app" ;;
+    rm -rf "/Applications/gestalter.app"
+    cp -R "$mnt/gestalter.app" /Applications/
+    echo "installed /Applications/gestalter.app" ;;
   MINGW*|MSYS*|CYGWIN*)
     exe=$(newest '*setup.exe'); [ -n "$exe" ] || { echo "no installer .exe in $dir" >&2; exit 1; }
     "$exe" /S

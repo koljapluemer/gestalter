@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Gestalter",
+  "productName": "gestalter",
   "version": "0.1.0",
   "identifier": "com.koljasam.gestalter",
   "build": {
@@ -10,7 +10,7 @@
     "beforeBuildCommand": { "script": "pnpm build", "cwd": "../distribution-android" }
   },
   "app": {
-    "windows": [{ "title": "Gestalter" }],
+    "windows": [{ "title": "gestalter" }],
     "security": { "csp": null }
   },
   "bundle": {

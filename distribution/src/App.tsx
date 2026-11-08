@@ -7,25 +7,25 @@ import css from './app.css?inline';
 import { DesktopSettings } from './DesktopSettings';
 import { NODE, desktop } from './desktop';
 
-/** The Gestalter, served by its desktop app: the notes are the folder the app serves, used directly. */
+/** The gestalter, served by its desktop app: the notes are the folder the app serves, used directly. */
 export function App() {
   const [health, setHealth] = useState<NodeHealth | { error: string }>();
   useEffect(() => {
     nodeHealth(NODE).then(setHealth, (e: unknown) => setHealth({ error: e instanceof Error ? e.message : String(e) }));
   }, []);
   if (!health) return <Spinner />;
-  if ('error' in health) return <Failure message={`The Gestalter desktop app isn't running (${health.error}). Start it, then reload.`} />;
+  if ('error' in health) return <Failure message={`The gestalter desktop app isn't running (${health.error}). Start it, then reload.`} />;
   if (!health.folder) return <ChooseFolder onChosen={(folder) => setHealth({ ...health, folder })} />;
-  return <Gestalter />;
+  return <Workspace />;
 }
 
-function Gestalter() {
+function Workspace() {
   const { repo, installed, decks, error } = usePluginRepo({ node: NODE }, registry);
   if (error) return <Failure message={`Could not open your notes: ${error}`} />;
   if (!repo) return <Spinner />;
   return (
     <RepoProvider repo={repo}>
-      <ViewTabs registry={registry} css={css} title="Gestalter" end={<>
+      <ViewTabs registry={registry} css={css} title="gestalter" end={<>
         <DebugLogButton />
         {registry.distribution.install_ui && <PluginsMenu mounted={installed} decks={decks} />}
         <DesktopMenu />
@@ -44,7 +44,7 @@ function ChooseFolder({ onChosen }: { onChosen: (folder: NonNullable<NodeHealth[
   return (
     <div className="flex h-dvh items-center justify-center p-4">
       <div className="flex max-w-md flex-col gap-3">
-        <h1 className="text-xl font-semibold">Welcome to the Gestalter</h1>
+        <h1 className="text-xl font-semibold">Welcome to the gestalter</h1>
         <p>Your notes live in a folder on this computer, as plain files you can back up and sync like any others. Choose
           an empty folder to start, or one you've used with this version before.</p>
         <button type="button" className="btn btn-primary self-start" onClick={choose}>Choose folder…</button>

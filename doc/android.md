@@ -1,6 +1,6 @@
 # Android
 
-The Gestalter on a phone: the same host and plugins as on the desktop, in Android's system WebView (Chrome). The
+The gestalter on a phone: the same host and plugins as on the desktop, in Android's system WebView (Chrome). The
 notes are kept on the phone and synced with the desktop it paired with, while both are on the same Wi-Fi.
 
 ```
@@ -15,11 +15,11 @@ distribution-android/     the page: distribution `gestalter-android`, its plugin
 
 ## How it fits together
 
-- **The page** runs `@gestalts/ui` with the plugins and the core in wasm, opened with `{native: 'tauri'}`
+- **The page** runs `@gestalts/host` with the plugins and the core in wasm, opened with `{native: 'tauri'}`
   (`@gestalts/client`). The core keeps the index in the page, as everywhere, but its storage is the app's folder:
-  every read and write is a command (`@gestalts/client/tauri`). Opening reads every note in one call.
-- **The app** holds a `gestalts_device` (gestalts' `crates/device`) on a thread of its own. It keeps the notes in its
-  private storage (`<app data>/folder`) and syncs them with the paired desktop. It tells the page what a sync changed
+  every read and write is a command (`@gestalts/client/tauri`). Opening reads every yml in one call.
+- **The app** holds a `gestalts_device` (gestalts' `crates/device`) on a thread of its own. It keeps the ymls in its
+  private storage (`<app data>/data`) and syncs them with the paired desktop. It tells the page what a sync changed
   (`gestalts://changed`, which the page rereads) and how syncing goes (`gestalts://status`, shown under the phone
   icon).
 - **Sync** runs on pairing, when the app comes to the foreground, 0.8 s after a write, and every 15 s while it's in
@@ -28,9 +28,7 @@ distribution-android/     the page: distribution `gestalter-android`, its plugin
   icon and choose "Scan pairing code" (or paste the code). The phone then reaches the desktop over TLS pinned to its
   key, first at the address that worked last, then by mDNS. While it looks, it holds a Wi-Fi multicast lock (Wi-Fi
   drivers drop multicast packets without one). "Forget" ends it on the phone; remove the phone on the desktop too.
-- **Left out**: canvas and Canvas2Typ (they need a big screen and a node's Typst service), sources, calendar. The
-  installs ("Plugins") work as on the desktop. The node's services aren't reachable from a phone, so panes needing
-  one are hidden.
+- **Left out**: backends. The node's services aren't reachable from a phone, so views needing one are hidden.
 
 ### Commands
 
@@ -38,9 +36,9 @@ The contract between `@gestalts/client/tauri` and `android/src/lib.rs`:
 
 | command | args | returns |
 |---|---|---|
-| `notes_list`, `notes_read_all`, `notes_hashes` | | keys, `[key, text][]`, `{key: hash}` |
-| `note_read`, `notes_read` | `key`, `keys` | text or null, `[key, text][]` |
-| `note_write`, `notes_write`, `note_delete` | `key, text`, `notes`, `key` | |
+| `ymls_list`, `ymls_read_all`, `ymls_hashes` | | keys, `[key, text][]`, `{key: hash}` |
+| `yml_read`, `ymls_read` | `key`, `keys` | text or null, `[key, text][]` |
+| `yml_write`, `ymls_write`, `yml_delete` | `key, text`, `notes`, `key` | |
 | `blobs_list`, `blob_delete` | `name` | names |
 | `blob_read` | `name` | raw bytes: a byte 1 then the blob, or a single 0 if missing |
 | `blob_write` | raw bytes, header `x-blob-name` (URI-encoded) | |

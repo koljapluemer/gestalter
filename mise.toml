@@ -18,7 +18,7 @@ run = [
 ]
 
 [tasks.dev]
-description = "The desktop app (tray, the plugins of gestalts and gestalt-plugins, dev profile) and the Gestalter :5173 on it, with hot reload"
+description = "The desktop app (tray, the plugins of gestalts and gestalt-plugins, dev profile) and the gestalter :5173 on it, with hot reload"
 depends = ["setup"]
 shell = "bash -c"
 run = """
@@ -72,7 +72,7 @@ ls gen/android/app/build/outputs/apk/*/debug/*.apk
 """
 
 [tasks.build]
-description = "Production build of the Gestalter into distribution/dist, which the desktop app embeds"
+description = "Production build of the gestalter into distribution/dist, which the desktop app embeds"
 depends = ["setup"]
 run = "pnpm --dir distribution build"
 

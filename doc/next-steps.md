@@ -1,17 +1,14 @@
 # Next steps
 
-The project's roadmap, and what the foundation still needs, is in the gestalts repo's `doc/next-steps.md`. These are
-the Gestalter's own steps.
+gestalter's own steps.
 
-- [x] **The desktop app serves the Gestalter**, as `gestalter` (formerly `gestalts-connector`): see
+- [x] **The desktop app serves the gestalter**, as `gestalter` (formerly `gestalts-connector`): see
   [desktop.md](desktop.md).
-- [ ] Take down the hosted `gestalter.koljasam.com` once its users had a release to sync into their folder, then drop
-  it from `ORIGINS` (`desktop/src/main.rs`).
 - [ ] A webview instead of the default browser, maybe: on Linux it would bring back GTK (webkit2gtk), which the tray
   avoids.
 - [x] **Pairing**: the desktop's settings show a QR code ("Devices"), list the paired devices and forget them; the
   node does the rest (gestalts' `doc/node.md#pairing-and-the-home-network`).
-- [x] **Android** ([android.md](android.md)): the Gestalter in the system WebView over the notes in the app's
+- [x] **Android** ([android.md](android.md)): the gestalter in the system WebView over the notes in the app's
   storage (`gestalts_device`), pairing by QR code, syncing while the app is in the foreground, the
   `gestalter-android` distribution, "last synced".
 - [ ] Android, next:

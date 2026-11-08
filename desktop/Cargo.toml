@@ -1,6 +1,6 @@
 [package]
 name = "gestalter"
-description = "The Gestalter's desktop app: serves the Gestalter, with a folder on this computer as the source of truth, and runs its plugins' workers"
+description = "The gestalter's desktop app: serves the gestalter, with a folder on this computer as the source of truth, and runs its plugins' workers"
 edition.workspace = true
 version.workspace = true
 
@@ -31,10 +31,10 @@ tray-icon = "0.26"
 tao = "0.37"
 
 [package.metadata.packager]
-product-name = "Gestalter"
+product-name = "gestalter"
 identifier = "com.koljasam.gestalter"
 category = "Productivity"
-description = "Your notes in a folder on this computer: the Gestalter, its plugins and their workers"
+description = "Your notes in a folder on this computer: the gestalter, its plugins and their workers"
 icons = ["assets/icon.png"]
 authors = ["Kolja Sam"]
 publisher = "Kolja Sam"
@@ -44,7 +44,7 @@ out-dir = "../target/packages"
 
 [package.metadata.generate-rpm]
 name = "gestalter"
-summary = "Your notes in a folder on this computer: the Gestalter, its plugins and their workers"
+summary = "Your notes in a folder on this computer: the gestalter, its plugins and their workers"
 license = "proprietary"
 assets = [
   { source = "../target/release/gestalter", dest = "/usr/bin/gestalter", mode = "755" },

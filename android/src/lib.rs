@@ -1,4 +1,4 @@
-//! The Gestalter on Android (`doc/android.md`): the Gestalter's page in the system WebView, its core in wasm over
+//! The gestalter on Android (`doc/android.md`): the gestalter's page in the system WebView, its core in wasm over
 //! the notes in this app's private storage (the commands below), and `gestalts_device` keeping that folder, the
 //! pairing with the desktop, and the sync, telling the page what changed (the events).
 
@@ -167,5 +167,5 @@ pub fn run() {
             blobs_list, blob_read, blob_write, blob_delete, gestalts_set, sync_status, sync_now, set_active, pair, forget,
         ])
         .run(tauri::generate_context!())
-        .expect("the Gestalter failed to start");
+        .expect("the gestalter failed to start");
 }
