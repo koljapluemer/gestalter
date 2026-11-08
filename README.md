@@ -20,7 +20,7 @@ parent/
 
 ```sh
 mise install          # once after cloning, and when mise.toml changes
-mise run dev          # desktop app (dev profile, both repos' plugins) + gestalter :5173 on it, hot reload
+mise run dev          # desktop app (dev profile, both repos' plugins) + gestalter on it, hot reload, on the first free ports (it prints them)
 mise run check        # tests, lints, typechecks
 mise run android-dev  # the Android app on a connected phone or emulator (needs the Android SDK and NDK)
 mise tasks            # everything else

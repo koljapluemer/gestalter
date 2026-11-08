@@ -18,13 +18,17 @@ run = [
 ]
 
 [tasks.dev]
-description = "The desktop app (tray, the plugins of gestalts and gestalt-plugins, dev profile) and the gestalter :5173 on it, with hot reload"
+description = "The desktop app (tray, the plugins of gestalts and gestalt-plugins, dev profile) and gestalter on it, with hot reload, on the first free ports from :5173 and :7737"
 depends = ["setup"]
 shell = "bash -c"
 run = """
 trap 'kill 0' EXIT
-cargo run -q -p gestalter -- --profile dev --plugins-dir ../gestalts/plugins --plugins-dir ../gestalt-plugins/sam-learns --open-url http://localhost:5173/ &
-pnpm --dir distribution dev &
+page="$(scripts/free-port.sh 5173)"
+# in steps of two: the port after it is this node's home-network port. Clear of an installed gestalter on 7717
+node="$(scripts/free-port.sh 7737 2)"
+echo "gestalter: http://localhost:$page/ on the node at :$node"
+cargo run -q -p gestalter -- --profile dev --port "$node" --lan-port "$((node + 1))" --plugins-dir ../gestalts/plugins --plugins-dir ../gestalt-plugins/sam-learns --open-url "http://localhost:$page/" &
+GESTALTER_NODE="http://127.0.0.1:$node" pnpm --dir distribution dev --port "$page" --strictPort &
 wait
 """
 
@@ -57,7 +61,12 @@ description = "The Android app on a connected phone or a running emulator, with 
 depends = ["setup"]
 dir = "android"
 shell = "bash -c"
-run = "source ../scripts/android-env.sh && cargo tauri android dev"
+run = """
+source ../scripts/android-env.sh
+export GESTALTER_PAGE_PORT="$(../scripts/free-port.sh 5174)"
+export GESTALTER_HMR_PORT="$(../scripts/free-port.sh $((GESTALTER_PAGE_PORT + 1)))"
+cargo tauri android dev --config "{\\"build\\":{\\"devUrl\\":\\"http://localhost:$GESTALTER_PAGE_PORT\\"}}"
+"""
 
 [tasks.android-build]
 description = "A debug APK for arm64 phones, to install with adb (other targets: cd android && cargo tauri android build --debug --apk --target x86_64)"

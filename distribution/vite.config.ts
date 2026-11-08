@@ -3,8 +3,8 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { gestaltsPlugins } from '@gestalts/vite';
 
-/** The desktop app's node (`mise run dev` starts it). */
-const NODE = 'http://127.0.0.1:7717';
+/** The desktop app's node (`mise run dev` starts it, and says where). */
+const NODE = process.env.GESTALTER_NODE ?? 'http://127.0.0.1:7717';
 
 /**
  * In development the node's API is proxied, so the page talks to it at its own origin, as it does when the desktop
