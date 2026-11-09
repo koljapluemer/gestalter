@@ -5,7 +5,9 @@ core:
   - ../../gestalts/plugins/quick-note
   - ../../gestalts/plugins/note-crud
   - ../../gestalts/plugins/note-queue
+  - ../../gestalts/plugins/flashcards
 plugins:
+  - ../../gestalts/plugins/flashcard-manager
   - ../../gestalt-plugins/sam-learns/alphabet-pronunciation-trainer
 default_views: [quick-note, note-crud, note-queue]
 install_ui: true
