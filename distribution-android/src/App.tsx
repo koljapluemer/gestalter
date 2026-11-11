@@ -3,7 +3,7 @@ import { Blocks, MonitorSmartphone } from 'lucide-react';
 import { registry } from 'virtual:gestalts-plugins';
 import { RepoProvider, useConnector, type YmlsIn } from '@gestalts/client';
 import { inTauri } from '@gestalts/client/tauri';
-import { DebugLogButton, PluginSettings, ViewTabs, usePluginRepo, type PluginEntry } from '@gestalts/host';
+import { PluginSettings, ViewTabs, usePluginRepo, type PluginEntry } from '@gestalts/host';
 import css from './app.css?inline';
 import { Pairing } from './Pairing';
 
@@ -20,7 +20,6 @@ export function App() {
   return (
     <RepoProvider repo={repo}>
       <ViewTabs registry={registry} css={css} title="gestalter" end={<>
-        <DebugLogButton />
         {registry.distribution.install_ui && <PluginsMenu mounted={installed} decks={decks} />}
         {WHERE.native && <SyncMenu />}
       </>} />

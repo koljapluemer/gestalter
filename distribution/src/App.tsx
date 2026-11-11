@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Blocks, HardDrive, Sparkles } from 'lucide-react';
 import { registry } from 'virtual:gestalts-plugins';
 import { RepoProvider, nodeHealth, useConnector, type NodeHealth } from '@gestalts/client';
-import { DebugLogButton, LlmSettings, PluginSettings, ViewTabs, usePluginRepo, type PluginEntry } from '@gestalts/host';
+import { LlmSettings, PluginSettings, ViewTabs, usePluginRepo, type PluginEntry } from '@gestalts/host';
 import css from './app.css?inline';
 import { DesktopSettings } from './DesktopSettings';
 import { NODE, desktop } from './desktop';
@@ -26,7 +26,6 @@ function Workspace() {
   return (
     <RepoProvider repo={repo}>
       <ViewTabs registry={registry} css={css} title="gestalter" end={<>
-        <DebugLogButton />
         {registry.distribution.install_ui && <PluginsMenu mounted={installed} decks={decks} />}
         <LlmMenu />
         <DesktopMenu />
