@@ -9,6 +9,7 @@ core:
 plugins:
   - ../../gestalts/plugins/flashcard-manager
   - ../../gestalts/plugins/source-manager
+  - ../../gestalts/plugins/concept-explorer
   - ../../gestalt-plugins/sam-learns/alphabet-pronunciation-trainer
 default_views: [quick-note, note-crud, note-queue]
 install_ui: true
