@@ -12,9 +12,12 @@ plugins:
   - ../../gestalts/plugins/concept-explorer
   - ../../gestalt-plugins/sam-learns/alphabet-pronunciation-trainer
   - ../../gestalt-plugins/sam-learns/transparent-input
+  - ../../gestalt-plugins/sam-learns/phrasebook
 default_views: [quick-note, note-crud, note-queue]
 install_ui: true
-# views run in the app's origin, so frames they embed (a video player) work; only for our own code, which loads nothing
-# from elsewhere at run time
-same_origin:
-  - transparent-input
+# what views may do beyond the strict sandbox, out of what each asks for (`permissions` in its plugin.yml): same-origin
+# runs a view in the app's origin, so frames it embeds (a video player) work, and is only for our own code, which loads
+# nothing from elsewhere at run time; microphone lets it record
+grants:
+  transparent-input: [same-origin]
+  phrasebook: [same-origin, microphone]

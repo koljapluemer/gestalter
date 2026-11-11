@@ -4,3 +4,4 @@
 - keep README lean, and docs/.md up to date
 - this is a real, user-facing app that has to work, and not just on this random dev machine
 - do not repeatedly tell me what I put in this claude.md, I know
+- optimize UX. this is an expert app, used for many hours. Avoid 27-click flows for simple actions.

@@ -11,5 +11,8 @@ plugins:
   - ../../gestalts/plugins/source-manager
   - ../../gestalts/plugins/concept-explorer
   - ../../gestalt-plugins/sam-learns/alphabet-pronunciation-trainer
+  # no grants: recording in the Android app needs its WebView to pass the microphone on, which it doesn't yet, so the
+  # phrasebook reveals instead of recording there
+  - ../../gestalt-plugins/sam-learns/phrasebook
 default_views: [quick-note, note-crud, note-queue]
 install_ui: true
