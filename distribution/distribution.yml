@@ -9,5 +9,10 @@ core:
 plugins:
   - ../../gestalts/plugins/flashcard-manager
   - ../../gestalt-plugins/sam-learns/alphabet-pronunciation-trainer
+  - ../../gestalt-plugins/sam-learns/transparent-input
 default_views: [quick-note, note-crud, note-queue]
 install_ui: true
+# views run in the app's origin, so frames they embed (a video player) work; only for our own code, which loads nothing
+# from elsewhere at run time
+same_origin:
+  - transparent-input

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Blocks, HardDrive } from 'lucide-react';
+import { Blocks, HardDrive, Sparkles } from 'lucide-react';
 import { registry } from 'virtual:gestalts-plugins';
 import { RepoProvider, nodeHealth, useConnector, type NodeHealth } from '@gestalts/client';
-import { DebugLogButton, PluginSettings, ViewTabs, usePluginRepo, type PluginEntry } from '@gestalts/host';
+import { DebugLogButton, LlmSettings, PluginSettings, ViewTabs, usePluginRepo, type PluginEntry } from '@gestalts/host';
 import css from './app.css?inline';
 import { DesktopSettings } from './DesktopSettings';
 import { NODE, desktop } from './desktop';
@@ -28,6 +28,7 @@ function Workspace() {
       <ViewTabs registry={registry} css={css} title="gestalter" end={<>
         <DebugLogButton />
         {registry.distribution.install_ui && <PluginsMenu mounted={installed} decks={decks} />}
+        <LlmMenu />
         <DesktopMenu />
       </>} />
     </RepoProvider>
@@ -60,6 +61,18 @@ function PluginsMenu({ mounted, decks }: { mounted: PluginEntry[]; decks: string
       <summary className="btn btn-sm btn-ghost btn-square" title="Plugins"><Blocks className="size-4" /></summary>
       <div className="dropdown-content z-50 mt-2 rounded-box border border-base-300 bg-base-100 p-3 shadow">
         <PluginSettings registry={registry} mounted={mounted} decks={decks} />
+      </div>
+    </details>
+  );
+}
+
+function LlmMenu() {
+  const [open, setOpen] = useState(false);
+  return (
+    <details className="dropdown dropdown-end" onToggle={(e) => setOpen(e.currentTarget.open)}>
+      <summary className="btn btn-sm btn-ghost btn-square" title="LLM providers"><Sparkles className="size-4" /></summary>
+      <div className="dropdown-content z-50 mt-2 max-h-[80dvh] overflow-y-auto rounded-box border border-base-300 bg-base-100 p-3 shadow">
+        {open && <LlmSettings />}
       </div>
     </details>
   );
